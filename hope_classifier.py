@@ -52,11 +52,11 @@ y_test_multi = test_df['multiclass'].map(multi_label_map)
 
 # Binary Model
 model_binary = TFBertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2)
-optimizer = tf.keras.optimizers.Adam(learning_rate=2e-5)
+optimizer = tf.keras.optimizers.legacy.Adam(learning_rate=2e-5)
 loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
 model_binary.compile(optimizer=optimizer, loss=loss, metrics=['accuracy'])
 
-# Callback to save the best model based on validation accuracy
+# Callback to save the best model
 checkpoint_binary = tf.keras.callbacks.ModelCheckpoint(
     '/lustre/work/cijezue/Hope/bert_binary_model',
     monitor='val_accuracy',
@@ -69,7 +69,7 @@ model_binary.fit(
     [train_encodings['input_ids'], train_encodings['attention_mask']],
     y_train_binary,
     validation_data=([val_encodings['input_ids'], val_encodings['attention_mask']], y_val_binary),
-    epochs=3,
+    epochs=3,  # Changed to 1 epoch
     batch_size=16,
     callbacks=[checkpoint_binary],
     verbose=1
@@ -84,7 +84,7 @@ binary_acc = accuracy_score(y_test_binary, binary_pred_labels)
 model_multi = TFBertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=5)
 model_multi.compile(optimizer=optimizer, loss=loss, metrics=['accuracy'])
 
-# Callback to save the best model based on validation accuracy
+# Callback to save the best model
 checkpoint_multi = tf.keras.callbacks.ModelCheckpoint(
     '/lustre/work/cijezue/Hope/bert_multi_model',
     monitor='val_accuracy',
@@ -97,7 +97,7 @@ model_multi.fit(
     [train_encodings['input_ids'], train_encodings['attention_mask']],
     y_train_multi,
     validation_data=([val_encodings['input_ids'], val_encodings['attention_mask']], y_val_multi),
-    epochs=3,
+    epochs=3,  # Changed to 1 epoch
     batch_size=16,
     callbacks=[checkpoint_multi],
     verbose=1
@@ -108,7 +108,7 @@ multi_pred = model_multi.predict([test_encodings['input_ids'], test_encodings['a
 multi_pred_labels = tf.argmax(multi_pred.logits, axis=1)
 multi_acc = accuracy_score(y_test_multi, multi_pred_labels)
 
-# Save tokenizer (shared for both models)
+# Save tokenizer
 tokenizer.save_pretrained('/lustre/work/cijezue/Hope/bert_tokenizer')
 
 # Save results
