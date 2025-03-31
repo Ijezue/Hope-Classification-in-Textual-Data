@@ -10,20 +10,6 @@ import os
 train_df = pd.read_csv('en_train.csv')
 test_df = pd.read_csv('en_dev.csv')
 
-'''
-# Basic cleaning
-def clean_text(text):
-    import re
-    text = text.lower()
-    text = re.sub(r'http\S+|www\S+', '', text)
-    text = re.sub(r'#\w+|\@\w+', '', text)
-    text = re.sub(r'[^\w\s]', '', text)
-    return text
-
-train_df['clean_text'] = train_df['text'].apply(clean_text)
-test_df['clean_text'] = test_df['text'].apply(clean_text)
-'''
-
 # BERT Tokenization
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 def encode_texts(texts, max_length=128):
@@ -71,7 +57,7 @@ model_binary.fit(
     [train_encodings['input_ids'], train_encodings['attention_mask']],
     y_train_binary,
     validation_data=([val_encodings['input_ids'], val_encodings['attention_mask']], y_val_binary),
-    epochs=3,  # Changed to 1 epoch
+    epochs=3,  
     batch_size=8,
     callbacks=[checkpoint_binary],
     verbose=1
@@ -99,7 +85,7 @@ model_multi.fit(
     [train_encodings['input_ids'], train_encodings['attention_mask']],
     y_train_multi,
     validation_data=([val_encodings['input_ids'], val_encodings['attention_mask']], y_val_multi),
-    epochs=3,  # Changed to 1 epoch
+    epochs=3,  
     batch_size=8,
     callbacks=[checkpoint_multi],
     verbose=1
