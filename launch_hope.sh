@@ -27,18 +27,18 @@ OIFS="$IFS"
 IFS=$'\n'
 
 # Load Conda environment from Miniconda3 installation
-source /lustre/work/cijezue/miniconda3/etc/profile.d/conda.sh
+source /path/miniconda3/etc/profile.d/conda.sh
 conda activate hopeenv
 
 # Ensure output directory exists in the working directory
-mkdir -p /lustre/work/cijezue/Hope/out
+mkdir -p /path/Hope/out
 
 # Run the Python script from the current directory
 echo -e "\n\nRunning Hope Classification Task\n"
-python /lustre/work/cijezue/Hope/hope_classifier.py > /lustre/work/cijezue/Hope/out/hope_output.log 2>&1
+python /path/Hope/hope_classifier.py > /path/Hope/out/hope_output.log 2>&1
 
 # Capture the last line of output (e.g., accuracies)
-LAST_LINE=$(tail -n 1 /lustre/work/cijezue/Hope/out/hope_output.log)
+LAST_LINE=$(tail -n 1 /path/Hope/out/hope_output.log)
 echo "Last line of Python output: $LAST_LINE"
 
 # Deactivate Conda and restore field separators
