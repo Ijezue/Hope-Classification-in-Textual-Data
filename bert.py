@@ -46,7 +46,7 @@ model_binary.compile(optimizer=optimizer, loss=loss, metrics=['accuracy'])
 
 # Callback to save the best model
 checkpoint_binary = tf.keras.callbacks.ModelCheckpoint(
-    '/lustre/work/cijezue/Hope/bert_binary_model',
+    '/path/Hope/bert_binary_model',
     monitor='val_accuracy',
     save_best_only=True,
     mode='max',
@@ -74,7 +74,7 @@ model_multi.compile(optimizer=optimizer, loss=loss, metrics=['accuracy'])
 
 # Callback to save the best model
 checkpoint_multi = tf.keras.callbacks.ModelCheckpoint(
-    '/lustre/work/cijezue/Hope/bert_multi_model',
+    '/path/Hope/bert_multi_model',
     monitor='val_accuracy',
     save_best_only=True,
     mode='max',
@@ -97,13 +97,13 @@ multi_pred_labels = tf.argmax(multi_pred.logits, axis=1)
 multi_acc = accuracy_score(y_test_multi, multi_pred_labels)
 
 # Save tokenizer
-tokenizer.save_pretrained('/lustre/work/cijezue/Hope/bert_tokenizer')
+tokenizer.save_pretrained('/path/Hope/bert_tokenizer')
 
 # Save results
-with open('/lustre/work/cijezue/Hope/out/hope_results.txt', 'w') as f:
+with open('/path/Hope/out/hope_results.txt', 'w') as f:
     f.write(f"Binary Accuracy: {binary_acc}\n")
     f.write(f"Multiclass Accuracy: {multi_acc}\n")
 
 print(f"Binary Accuracy: {binary_acc}")
 print(f"Multiclass Accuracy: {multi_acc}")
-print("Best models saved to /lustre/work/cijezue/Hope/bert_binary_model and /lustre/work/cijezue/Hope/bert_multi_model")
+print("Best models saved to /path/Hope/bert_binary_model and /path/Hope/bert_multi_model")
