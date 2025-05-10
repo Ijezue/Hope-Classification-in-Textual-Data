@@ -1,2 +1,0 @@
-Binary Accuracy: 0.8401682439537329
-Multiclass Accuracy: 0.7733964248159831

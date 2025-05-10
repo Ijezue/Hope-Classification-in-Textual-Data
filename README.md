@@ -1,67 +1,118 @@
 # Hope Classification Project
 
-A machine learning project that uses BERT-based models to classify text into hope-related categories, developed for Texas Tech University's HPCC (High Performance Computing Center).
+A machine learning project that compares transformer-based models (BERT, GPT-2, and DeBERTa) for hope classification in textual data, developed for Texas Tech University.
 
 ## Overview
 
-This project implements two classification tasks:
+This project implements two classification tasks across two distinct implementations:
 
-1. Binary Classification: Categorizing text as either "Hope" or "Not Hope"
-2. Multiclass Classification: Categorizing text into five categories:
-   - Not Hope
-   - Generalized Hope
-   - Realistic Hope
-   - Unrealistic Hope
-   - Sarcasm
+1. **Original BERT Implementation**:
+
+   - Binary classification: "Hope" vs. "Not Hope"
+   - Multiclass classification: Five hope-related categories
+
+2. **Extended Implementation** comparing three transformer architectures:
+   - BERT (bidirectional encoder)
+   - GPT-2 (unidirectional autoregressive)
+   - DeBERTa (disentangled attention)
+
+The project evaluates model performance, computational efficiency, and classification patterns to determine the optimal architecture for hope detection.
+
+## Classification Tasks
+
+- **Binary Classification**: Categorizing text as either "Hope" or "Not Hope"
+- **Multiclass Classification**: Categorizing text into five categories:
+  - Not Hope
+  - Generalized Hope
+  - Realistic Hope
+  - Unrealistic Hope
+  - Sarcasm
 
 ## Technical Stack
 
 - Python 3.8+
 - TensorFlow
-- Hugging Face Transformers (BERT)
+- Hugging Face Transformers (BERT, GPT-2, DeBERTa)
 - pandas
 - scikit-learn
+- matplotlib & seaborn (for visualization)
+- Jupyter Notebooks (for implementation and analysis)
 
 ## Project Structure
 
 ```
-/Hope/
-├── hope_classifier.py      # Main classification script
-├── launch_hope.sh         # SLURM job submission script
-├── en_train.csv           # Training dataset
-├── en_dev.csv            # Development/test dataset
-├── out/                  # Output directory
-│   ├── hope_output.log   # Training logs
-│   └── hope_results.txt  # Classification results
-└── bert_tokenizer/       # Saved BERT tokenizer
+/
+├── bert-classifier.ipynb                # Original BERT implementation notebook
+├── bert.py                              # Python script of original BERT implementation
+├── Extended_Implementation_Hope_vs_NotHope.ipynb  # Extended implementation comparing all models
+├── launch_hope.sh                       # SLURM job submission script for HPCC
+├── submit.py                            # Prediction script for test data
+├── en_train.csv                         # Training dataset
+├── en_dev.csv                           # Development/test dataset
+├── extended-implementation-results/     # Results from extended model comparison
+│   ├── accuracy_comparison.png          # Accuracy comparison visualization
+│   ├── bert_binary_confusion_matrix.png # BERT binary classification confusion matrix
+│   ├── bert_multiclass_confusion_matrix.png
+│   ├── comparison_results.txt           # Detailed performance metrics
+│   ├── deberta_binary_confusion_matrix.png
+│   ├── deberta_multiclass_confusion_matrix.png
+│   ├── gpt2_binary_confusion_matrix.png
+│   ├── gpt2_multiclass_confusion_matrix.png
+│   ├── model_comparison_metrics.csv     # Tabulated performance comparison
+│   └── training_time_comparison.png     # Computational efficiency comparison
+└── README.md                            # Project documentation
 ```
 
-## Features
+## Model Implementations
 
-- Text preprocessing and cleaning
-- BERT tokenization
-- Binary hope classification
-- Multiclass hope classification
-- Model checkpointing
-- Performance evaluation
-- Result logging
+### Original BERT Implementation
 
-## Model Architecture
-
-- Base Model: BERT (bert-base-uncased)
-- Binary Classification: 2 output classes
-- Multiclass Classification: 5 output classes
-- Training Parameters:
+- **Model**: BERT (bert-base-uncased)
+- **Features**: Minimal text preprocessing, direct tokenization
+- **Environment**: HPCC with NVIDIA A100 GPUs
+- **Training Parameters**:
+  - Batch Size: 8
   - Learning Rate: 2e-5
-  - Optimizer: Adam
-  - Loss: SparseCategoricalCrossentropy
-  - Batch Size: 16
   - Epochs: 3
+  - Max Sequence Length: 128
+
+### Extended Implementation Comparison
+
+- **Models**: BERT, GPT-2, DeBERTa (base versions)
+- **Features**: Basic text preprocessing (lowercase, URL removal, hashtag removal, punctuation removal)
+- **Environment**: Google Colab with NVIDIA T4 GPUs
+- **Training Parameters**:
+  - Batch Size: 16
+  - Learning Rate: 2e-5
+  - Epochs: 3
+  - Max Sequence Length: 128
+
+## Key Findings
+
+- BERT achieved the highest performance for both binary (84.49%) and multiclass (72.03%) classification in the extended study
+- Original BERT implementation achieved 83.65% for binary and 74.87% for multiclass classification
+- GPT-2 showed remarkable strength in sarcasm detection (92.46% recall)
+- DeBERTa required nearly double BERT's training time while delivering comparable or slightly lower performance
+- Implementation details (preprocessing, batch size, computational environment) significantly impact model performance
 
 ## Usage
 
-1. Ensure you have access to TTU's HPCC (Quanah)
-2. Set up the conda environment:
+### Local Development
+
+1. Clone the repository
+2. Install dependencies:
+
+```bash
+pip install tensorflow transformers pandas scikit-learn jupyter matplotlib seaborn
+```
+
+3. Run the Jupyter notebooks:
+   - `bert-classifier.ipynb` for the original BERT implementation
+   - `Extended_Implementation_Hope_vs_NotHope.ipynb` for the extended comparison
+
+### HPCC Deployment (TTU Quanah)
+
+1. Set up the conda environment:
 
 ```bash
 conda create -n hopeenv python=3.8
@@ -69,7 +120,7 @@ conda activate hopeenv
 pip install tensorflow transformers pandas scikit-learn
 ```
 
-3. Submit the job:
+2. Submit the job:
 
 ```bash
 sbatch launch_hope.sh
@@ -77,33 +128,21 @@ sbatch launch_hope.sh
 
 ## Resource Requirements
 
-- Node: 1
-- Tasks per node: 1
-- Memory: 40GB per CPU
-- Runtime: 14 hours
-- Partition: nocona
+- **Original Implementation (HPCC)**:
 
-## Output
+  - Node: 1
+  - Memory: 40GB per CPU
+  - GPU: NVIDIA A100
+  - Runtime: ~14 hours
 
-The models will save:
-
-- Binary classifier: `/lustre/work/cijezue/Hope/bert_binary_model`
-- Multiclass classifier: `/lustre/work/cijezue/Hope/bert_multi_model`
-- Results: `/lustre/work/cijezue/Hope/out/hope_results.txt`
+- **Extended Implementation (Google Colab)**:
+  - GPU: NVIDIA T4
+  - Runtime: Varies by model (443s - 948s per task)
 
 ## Authors
 
-### Lead Developer
-
-- **Name**: Ebuka Ijezue
-- **Email**: cijezue@ttu.edu
-- **Institution**: Texas Tech University
-
-### Collaborators
-
-- **Name**: Fredrick Eneye Tania-Amanda
-- **Email**: tafredri@ttu.edu
-- **Institution**: Texas Tech University
+- **Ebuka Ijezue** - _Lead Developer_ - [cijezue@ttu.edu]
+- **Fredrick Eneye Tania-Amanda** - _Collaborator_ - [tafredri@ttu.edu]
 
 ## License
 
@@ -113,4 +152,4 @@ MIT License
 
 - Texas Tech University HPCC
 - Hugging Face Transformers
-- BERT developers
+- PolyHope shared task at IberLEF 2025

@@ -1,0 +1,67 @@
+# Binary Classification Results
+
+## BERT Binary Results
+Accuracy: 0.8449
+Training Time: 443.17 seconds
+
+Classification Report:
+  Not Hope: Precision: 0.8569, Recall: 0.8475, F1: 0.8521, Support: 1003.0
+  Hope: Precision: 0.8319, Recall: 0.8420, F1: 0.8369, Support: 899.0
+
+
+## GPT2 Binary Results
+Accuracy: 0.7934
+Training Time: 526.93 seconds
+
+Classification Report:
+  Not Hope: Precision: 0.9224, Recall: 0.6640, F1: 0.7722, Support: 1003.0
+  Hope: Precision: 0.7144, Recall: 0.9377, F1: 0.8110, Support: 899.0
+
+
+## DEBERTA Binary Results
+Accuracy: 0.8070
+Training Time: 703.67 seconds
+
+Classification Report:
+  Not Hope: Precision: 0.9130, Recall: 0.7009, F1: 0.7930, Support: 1003.0
+  Hope: Precision: 0.7350, Recall: 0.9255, F1: 0.8193, Support: 899.0
+
+
+# Multiclass Classification Results
+
+## BERT Multiclass Results
+Accuracy: 0.7203
+Training Time: 539.24 seconds
+
+Classification Report:
+  Not Hope: Precision: 0.8555, Recall: 0.7402, F1: 0.7937, Support: 816.0
+  Generalized Hope: Precision: 0.7361, Recall: 0.6510, F1: 0.6909, Support: 467.0
+  Realistic Hope: Precision: 0.4578, Recall: 0.7755, F1: 0.5758, Support: 196.0
+  Unrealistic Hope: Precision: 0.4792, Recall: 0.6725, F1: 0.5596, Support: 171.0
+  Sarcasm: Precision: 0.9242, Recall: 0.7738, F1: 0.8423, Support: 252.0
+
+
+## GPT2 Multiclass Results
+Accuracy: 0.7129
+Training Time: 529.69 seconds
+
+Classification Report:
+  Not Hope: Precision: 0.8345, Recall: 0.7414, F1: 0.7852, Support: 816.0
+  Generalized Hope: Precision: 0.6066, Recall: 0.7495, F1: 0.6705, Support: 467.0
+  Realistic Hope: Precision: 0.5116, Recall: 0.4490, F1: 0.4783, Support: 196.0
+  Unrealistic Hope: Precision: 0.6015, Recall: 0.4678, F1: 0.5263, Support: 171.0
+  Sarcasm: Precision: 0.7898, Recall: 0.9246, F1: 0.8519, Support: 252.0
+
+
+## DEBERTA Multiclass Results
+Accuracy: 0.7156
+Training Time: 947.88 seconds
+
+Classification Report:
+  Not Hope: Precision: 0.7680, Recall: 0.8235, F1: 0.7948, Support: 816.0
+  Generalized Hope: Precision: 0.7090, Recall: 0.5375, F1: 0.6114, Support: 467.0
+  Realistic Hope: Precision: 0.4949, Recall: 0.7398, F1: 0.5930, Support: 196.0
+  Unrealistic Hope: Precision: 0.6825, Recall: 0.5029, F1: 0.5791, Support: 171.0
+  Sarcasm: Precision: 0.8150, Recall: 0.8214, F1: 0.8182, Support: 252.0
+
+
